@@ -1,4 +1,3 @@
-// Basic localStorage cart
 const KEY = "cart_v1";
 
 function loadCart() {
@@ -31,6 +30,9 @@ function setQty(id, source, qty) {
 function countItems() {
   return loadCart().reduce((n, x) => n + (x.qty || 1), 0);
 }
+function clearCart() {
+  saveCart([]);
+  return [];
+}
 
-// Export
-export { loadCart, saveCart, addToCart, removeFromCart, setQty, countItems };
+export { loadCart, saveCart, addToCart, removeFromCart, setQty, countItems, clearCart };

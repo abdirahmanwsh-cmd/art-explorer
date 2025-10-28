@@ -3,7 +3,7 @@ import { loadCart, removeFromCart, setQty, countItems } from "../lib/cart";
 import { useAuth } from "../auth";
 
 // Component
-function Cart({ open, onClose }) {
+function Cart({ open, onClose, onCheckout }) {
   const { user, loginWithGoogle } = useAuth();
   const [items, setItems] = useState([]);
 
@@ -58,7 +58,11 @@ function Cart({ open, onClose }) {
           <div className="text-base font-semibold">Total</div>
           <div className="ml-auto text-base font-semibold">${total.toFixed(2)}</div>
         </div>
-        <button className="mt-3 w-full rounded-lg bg-neutral-100 text-neutral-900 px-4 py-2 font-medium hover:bg-white" onClick={() => alert("Your artwork is being delivered to you.")}>
+        <button
+          className="mt-3 w-full rounded-lg bg-neutral-100 text-neutral-900 px-4 py-2 font-medium hover:bg-white"
+          onClick={() => onCheckout && onCheckout()}
+          disabled={items.length === 0}
+        >
           Checkout
         </button>
       </div>
@@ -66,5 +70,4 @@ function Cart({ open, onClose }) {
   );
 }
 
-// Export
 export default Cart;
