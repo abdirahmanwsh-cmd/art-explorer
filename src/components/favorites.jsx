@@ -4,7 +4,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { auth, db } from "../firebaseconfig";
 import Row from "./Row";
 
-// Component
+
 function Favorites() {
   const [user, setUser] = useState(null);
   const [favs, setFavs] = useState([]);
@@ -51,5 +51,5 @@ function Favorites() {
   );
 }
 
-// Export
+
 export default Favorites;

@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { auth, provider } from "./firebaseconfig";
 
-// Context
+
 const AuthContext = createContext({
   user: null,
   loading: true,
@@ -17,7 +17,7 @@ const AuthContext = createContext({
   logout: async () => {},
 });
 
-// Provider
+
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,8 +51,8 @@ function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// Hook
+
 function useAuth() { return useContext(AuthContext); }
 
-// Exports
+
 export { AuthProvider, useAuth };

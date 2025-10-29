@@ -1,6 +1,6 @@
 const BASE = "https://api.artic.edu/api/v1";
 
-/** Search AIC artworks by keyword */
+
   async function aicSearch(query, limit = 12) {
   const url = `${BASE}/artworks/search?q=${encodeURIComponent(
     query

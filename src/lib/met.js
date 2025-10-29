@@ -1,6 +1,6 @@
 const BASE = "https://collectionapi.metmuseum.org/public/collection/v1";
 
-/** Search for object IDs that match a keyword */
+
   async function metSearchIDs(query) {
   const url =  `${BASE}/search?hasImages=true&q=${encodeURIComponent(query)}`;
   const res = await fetch(url);
@@ -9,7 +9,7 @@ const BASE = "https://collectionapi.metmuseum.org/public/collection/v1";
   return data.objectIDs ? data.objectIDs.slice(0, 20) : [];
 }
 
-/** Fetch object details for an array of IDs (limit optional) */
+
   async function metGetObjects(ids = [], limit = 12) {
   const slice = ids.slice(0, limit);
   const promises = slice.map(async (id) => {

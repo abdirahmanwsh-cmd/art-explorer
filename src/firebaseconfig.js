@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Firebase configuration
+
 const firebaseConfig = {
   apiKey: "AIzaSyDsrfWXF1oE0Bupbu_X1ccnBAY-SpyiFdI",
   authDomain: "art-explorer-6707a.firebaseapp.com",

@@ -1,6 +1,6 @@
 import { useAuth } from "../auth";
 
-// Component
+
 function Header({ view, setView, canDetails }) {
   const { user, loginWithGoogle, logout } = useAuth();
 
@@ -65,5 +65,5 @@ function Header({ view, setView, canDetails }) {
   );
 }
 
-// Export
+
 export default Header;

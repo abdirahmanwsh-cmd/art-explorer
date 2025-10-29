@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 
-// Component
 function Checkout({ onContinue }) {
   useEffect(() => {
-    // could add analytics/pixel here later
+    
   }, []);
 
   return (

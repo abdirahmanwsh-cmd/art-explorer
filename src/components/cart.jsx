@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { loadCart, removeFromCart, setQty, countItems } from "../lib/cart";
 import { useAuth } from "../auth";
 
-// Component
+
 function Cart({ open, onClose, onCheckout }) {
   const { user, loginWithGoogle } = useAuth();
   const [items, setItems] = useState([]);

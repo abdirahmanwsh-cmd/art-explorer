@@ -11,37 +11,36 @@ import Checkout from "./components/checkout.jsx";
 import { countItems, clearCart } from "./lib/cart";
 import { useAuth } from "./auth";
 
-// Component
+
 function App() {
   const { user, loginWithGoogle } = useAuth();
 
-  // Default rows
+  
   const [metItems, setMetItems] = useState([]);
   const [aicItems, setAicItems] = useState([]);
 
-  // NEW rows
+  
   const [modernItems, setModernItems] = useState([]);
   const [renaissanceItems, setRenaissanceItems] = useState([]);
   const [streetItems, setStreetItems] = useState([]);
   const [surrealItems, setSurrealItems] = useState([]);
 
-  // Search state
+  
   const [searchValue, setSearchValue] = useState("");
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Views: home | favorites | details | checkout
   const [view, setView] = useState("home");
 
-  // Details selection
-  const [selection, setSelection] = useState(null); // { id, source }
+ 
+  const [selection, setSelection] = useState(null);
 
-  // Cart UI
+  
   const [cartOpen, setCartOpen] = useState(false);
   const [cartCount, setCartCount] = useState(countItems());
 
-  // Helper: fetch a mixed row from both APIs, tagged with source
+  
   async function fetchMixedRow(term, take = 12) {
     const [metIDs, aic] = await Promise.all([metSearchIDs(term), aicSearch(term, take)]);
     const met = await metGetObjects(metIDs, take);
@@ -50,23 +49,23 @@ function App() {
     return [...metTagged, ...aicTagged].slice(0, take);
   }
 
-  // Load rows on mount
+  
   useEffect(() => {
     async function loadDefaults() {
       try {
-        // Keep your two originals
+        
         const ids = await metSearchIDs("impressionism");
         const met = await metGetObjects(ids, 12);
         const aic = await aicSearch("photography", 12);
         setMetItems(met);
         setAicItems(aic);
 
-        // New four
+        
         const [modern, rena, street, surreal] = await Promise.all([
-          fetchMixedRow("abstract modern", 12),          // Modern & Abstract
-          fetchMixedRow("renaissance classical", 12),    // Renaissance & Classical
-          fetchMixedRow("street urban", 12),             // Street & Urban
-          fetchMixedRow("surrealism fantasy", 12),       // Surrealism & Fantasy
+          fetchMixedRow("abstract modern", 12),         
+          fetchMixedRow("renaissance classical", 12),    
+          fetchMixedRow("street urban", 12),             
+          fetchMixedRow("surrealism fantasy", 12),       
         ]);
         setModernItems(modern);
         setRenaissanceItems(rena);
@@ -79,7 +78,7 @@ function App() {
     loadDefaults();
   }, []);
 
-  // Search handler
+  
   async function handleSearch(term) {
     const raw = (typeof term === "string" ? term : searchValue) || "";
     const q = raw.trim();
@@ -102,7 +101,7 @@ function App() {
     }
   }
 
-  // Open details (auth-gated)
+  
   function openDetails({ item, source }) {
     if (!user) { loginWithGoogle(); return; }
     const objectId = String(item?.objectID ?? item?.id ?? item?.artwork_id ?? item?.objectId);
@@ -110,21 +109,20 @@ function App() {
     setView("details");
   }
 
-  // Checkout flow: close cart, clear cart, show success page
   function handleCheckout() {
     setCartOpen(false);
     clearCart();
     setTimeout(() => {
       setView("checkout");
       setCartCount(countItems());
-    }, 150); // small delay so drawer can close smoothly
+    }, 150); 
   }
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       <Header view={view} setView={setView} canDetails={!!selection} />
 
-      {/* Floating cart button */}
+      
       <button
         onClick={() => (user ? setCartOpen(true) : loginWithGoogle())}
         className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 rounded-full bg-neutral-100 text-neutral-900 px-4 py-2 font-medium shadow"
@@ -146,7 +144,7 @@ function App() {
           <Checkout onContinue={() => setView("home")} />
         ) : (
           <>
-            {/* Search Bar */}
+          
             <div className="flex gap-2 my-5 px-0">
               <input
                 type="search"
@@ -167,7 +165,7 @@ function App() {
               </button>
             </div>
 
-            {/* Search Results */}
+            
             {loading && (
               <div className="text-center text-neutral-400 py-10">Loading...</div>
             )}
@@ -180,7 +178,7 @@ function App() {
               />
             )}
 
-            {/* Final Six Rows */}
+            
             <Row title="Impressionism (The Met)" items={metItems} source="met" onOpen={openDetails} />
             <Row title="Photography (AIC)" items={aicItems} source="aic" onOpen={openDetails} />
             <Row title="Modern & Abstract" items={modernItems} source="met" onOpen={openDetails} />
@@ -191,7 +189,7 @@ function App() {
         )}
       </main>
 
-      {/* Cart drawer */}
+      
       <Cart
         open={cartOpen}
         onClose={() => { setCartOpen(false); setCartCount(countItems()); }}

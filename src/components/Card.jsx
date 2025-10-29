@@ -40,7 +40,7 @@ function Card({ item, source, onOpen }) {
       tabIndex={0}
       onClick={handleOpen}
       onKeyDown={(e) => e.key === "Enter" && handleOpen(e)}
-      // Mobile-first width (edge-to-edge feel), still nice on desktop
+      
       className="group shrink-0 rounded-2xl bg-neutral-900/60 border border-neutral-800 overflow-hidden
                  w-[86vw] xs:w-[74vw] sm:w-56 hover:border-neutral-700 hover:shadow-xl transition-all duration-300"
       title={title}
@@ -57,7 +57,7 @@ function Card({ item, source, onOpen }) {
           onError={(e) => { e.currentTarget.src = BLANK; }}
         />
 
-        {/* Top-right heart (don’t bubble) */}
+        
         <div
           className="absolute top-2 right-2"
           onClick={(e) => { e.stopPropagation(); e.preventDefault?.(); }}
@@ -65,7 +65,7 @@ function Card({ item, source, onOpen }) {
           <FavoriteButton art={art} className="px-2.5 py-1.5 rounded-full text-base bg-black/55 backdrop-blur border border-white/20" />
         </div>
 
-        {/* Text overlay at bottom for compact cards on phone */}
+        
         <div className="absolute inset-x-0 bottom-0 p-2.5">
           <div className="rounded-xl bg-gradient-to-t from-black/80 via-black/50 to-transparent p-2.5">
             <div className="text-[13px] font-semibold text-white leading-tight line-clamp-2">

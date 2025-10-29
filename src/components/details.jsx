@@ -3,18 +3,18 @@ import FavoriteButton from "./FavoriteButton";
 import { addToCart } from "../lib/cart";
 import { useAuth } from "../auth";
 
-// Helpers
+
 function aicImageUrl(image_id) {
   return image_id ?`https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`: "";
 }
 
-// Component (page mode)
+
 function Details({ selection, onBack, onCartChange }) {
   const { user, loginWithGoogle } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Auth-gate entire page
+  
   if (!user) {
     return (
       <div className="px-4 py-8">
@@ -124,7 +124,7 @@ function Details({ selection, onBack, onCartChange }) {
   }
 
   return (
-    // NOTE: overflow + max-h ensure mobile can scroll the page if it overflows
+   
     <section className="my-6 overflow-y-auto max-h-[90vh]">
       <div className="flex items-center px-4 gap-2">
         <button

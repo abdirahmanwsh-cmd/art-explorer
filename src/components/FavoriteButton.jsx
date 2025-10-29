@@ -3,7 +3,6 @@ import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebaseconfig";
 import { toggleFavorite, watchFavorite } from "../lib/favorites";
 
-// Component
 function FavoriteButton({ art, className }) {
   const [user, setUser] = useState(null);
   const [isFav, setIsFav] = useState(false);
@@ -21,7 +20,7 @@ function FavoriteButton({ art, className }) {
   }, [user, art]);
 
   async function handleClick(e) {
-    // very important: never bubble to Card's onClick
+    
     e.stopPropagation();
     try {
       setBusy(true);
@@ -51,5 +50,5 @@ function FavoriteButton({ art, className }) {
   );
 }
 
-// Export
+
 export default FavoriteButton;
