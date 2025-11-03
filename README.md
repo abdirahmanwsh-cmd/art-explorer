@@ -53,6 +53,28 @@ VITE_FIREBASE_PROJECT_ID=your_project_id
 
 npm run dev
 
+## CORS Setup (Development Only)
+
+When running ArtExplorer locally, you might notice that artwork data doesn’t load and your console shows CORS errors.
+This happens because the Met Museum API blocks browser requests from unapproved origins.
+
+To fix this temporarily during local development:
+
+## Steps
+
+1. Go to the CORS Anywhere demo page:
+👉 https://cors-anywhere.herokuapp.com/corsdemo
+
+
+2. Click the button that says “Request temporary access to the demo server.”
+
+
+3. Once approved, refresh your local app (npm run dev).
+
+
+4. The artwork data should now load correctly.
+
+
 
 ## 📁 Folder Structure
 
