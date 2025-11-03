@@ -2,50 +2,41 @@ name: Deploy to Firebase Hosting
 
 on:
   push:
-    branches: [ main ]   # Runs when you push to main branch
-  pull_request:
-    branches: [ main ]   # Also runs on PRs (optional)
+    branches: [ main ]
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      SUBDIR: art-explorer   # <— set this to the folder that contains firebase.json
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+
+      - name: List files at repo root (debug)
+        run: ls -la
+
+      - name: List files in subdir (debug)
+        run: ls -la "$SUBDIR"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
-          cache: npm
+          node-version: '18'
 
-      - name: Install dependencies
+      - name: Install deps
+        working-directory: ${{ env.SUBDIR }}
         run: npm ci
 
-      - name: Build project
+      - name: Build
+        working-directory: ${{ env.SUBDIR }}
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: orer-6707a   # Change if your Firebase project ID is different
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_TOKEN }}'
           channelId: live
+          entryPoint: ${{ env.SUBDIR }}   # <— tell the action where firebase.json is
